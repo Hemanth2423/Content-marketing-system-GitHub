@@ -1,0 +1,61 @@
+GITHUB BRAND VOICE GUIDELINES
+==============================
+
+CORE VOICE PRINCIPLES
+----------------------
+GitHub's voice is developer-first. We write for people who build software, not people who buy it.
+Our tone is technically credible, direct, and unpretentious. We respect the reader's intelligence.
+We do not use marketing jargon. We do not hype. We show, we don't tell.
+
+TONE BY CONTENT TYPE
+---------------------
+Technical tutorials: Precise, instructional, empathetic to the learner. Use second person ("you").
+Assume the reader is competent but may be new to this specific topic.
+
+Product announcements: Clear and direct. Lead with what changed and why it matters to developers.
+Avoid superlatives ("best", "revolutionary", "game-changing"). State facts.
+
+Developer thought leadership: Opinionated and specific. Take a position and defend it.
+Avoid fence-sitting. GitHub has a perspective — state it clearly.
+
+Case studies: Narrative and concrete. Lead with the customer's challenge, not GitHub's product.
+Use specific numbers when available. Let the outcome speak.
+
+PRODUCT NAME RULES
+------------------
+CORRECT: GitHub, GitHub Actions, GitHub Copilot, GitHub Codespaces, GitHub Advanced Security
+INCORRECT: Github, GITHUB, git hub, GitHub actions, github copilot, Github Copilot
+
+Always capitalize "GitHub" — capital G, capital H.
+GitHub Copilot is always two words, both capitalized.
+GitHub Actions is always two words, both capitalized.
+GitHub Codespaces is always two words, both capitalized.
+
+VOCABULARY PREFERENCES
+-----------------------
+Use: developers, engineers, software teams, open source, repository, pull request, commit, branch
+Avoid: coders, programmers (unless quoting), users (prefer developers), resources (prefer docs/guides)
+Avoid: leverage (use: use), utilize (use: use), synergy, ecosystem (overused), seamlessly
+
+STRUCTURAL RULES
+----------------
+Lead with the most important information. No throat-clearing preambles.
+Short paragraphs. One idea per paragraph.
+Active voice over passive voice.
+Specific over vague: "reduces review time by 35%" not "significantly improves review speed"
+Attribution required for all statistics and external claims.
+
+PROHIBITED PHRASES
+------------------
+"game-changing"
+"revolutionary"
+"world-class"
+"best-in-class"
+"cutting-edge"
+"state-of-the-art"
+"seamlessly integrates"
+"end-to-end solution"
+"robust platform"
+"at the end of the day"
+"circle back"
+"synergize"

@@ -1,0 +1,45 @@
+{
+  "linkedin": {
+    "max_characters": 3000,
+    "max_hashtags": 3,
+    "tone": "professional, developer-credible, not corporate",
+    "structure": "hook → core point → supporting detail → call to action",
+    "avoid": ["excessive hashtags", "em-dash lists", "all-caps words", "clickbait"],
+    "requires_cta": true,
+    "paragraph_max_lines": 3,
+    "content_types": ["announcement", "thought_leadership"]
+  },
+  "twitter": {
+    "tweet_max_characters": 280,
+    "min_tweets": 2,
+    "max_tweets": 8,
+    "tone": "conversational, technically specific, opinionated",
+    "structure": "tweet_1=hook (standalone shareable) → tweets_2_to_N=argument → final_tweet=summary or cta",
+    "numbering_format": "N/TOTAL e.g. 1/5",
+    "each_tweet_standalone": true,
+    "avoid": ["thread that requires previous tweets for context", "excessive abbreviation"],
+    "content_types": ["thought_leadership"]
+  },
+  "email": {
+    "subject_max_characters": 60,
+    "preview_text_max_characters": 90,
+    "body_format": "plain prose, no markdown",
+    "tone": "warm, clear, developer-friendly",
+    "avoid": ["markdown formatting", "lengthy preambles", "multiple CTAs"],
+    "content_types": ["tutorial", "announcement", "case_study"]
+  },
+  "blog": {
+    "min_word_count": 800,
+    "max_word_count": 3000,
+    "format": "markdown",
+    "heading_hierarchy": "H1 title, H2 major sections, H3 subsections",
+    "code_blocks": "required for tutorials",
+    "content_types": ["tutorial", "case_study"]
+  },
+  "channel_by_content_type": {
+    "tutorial": ["blog"],
+    "announcement": ["linkedin"],
+    "thought_leadership": ["twitter"],
+    "case_study": ["blog"]
+  }
+}

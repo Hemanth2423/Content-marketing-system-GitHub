@@ -1,0 +1,59 @@
+# LEGAL FLAGS — keyword and phrase triggers requiring Reviewer review
+# Lines starting with # are comments. One entry per line.
+# Any match in a draft triggers the Reviewer stage (case-insensitive).
+
+# Competitor mentions
+GitLab
+Bitbucket
+Azure DevOps
+CircleCI
+Jenkins
+Travis CI
+Jira
+Linear
+Notion
+Atlassian
+
+# Benchmark and performance claims
+faster than
+times faster
+% faster
+% reduction
+% improvement
+outperforms
+benchmark
+performance comparison
+beats
+superior to
+compared to competitors
+
+# Legal and compliance language
+guaranteed
+warranty
+indemnif
+liable
+liability
+comply
+compliance with
+regulatory
+certif
+SOC 2
+GDPR
+HIPAA
+FedRAMP
+
+# Financial and acquisition language
+acquisition
+merger
+partnership announcement
+revenue
+valuation
+IPO
+funding round
+
+# Sponsored and disclosure triggers
+sponsored
+paid partnership
+in partnership with
+brought to you by
+affiliate

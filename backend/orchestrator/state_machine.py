@@ -1,0 +1,130 @@
+from enum import Enum
+
+
+class PipelineState(str, Enum):
+    BRIEF_DRAFT = "BRIEF_DRAFT"
+    BRIEF_SUBMITTED = "BRIEF_SUBMITTED"
+    ENRICHMENT_IN_PROGRESS = "ENRICHMENT_IN_PROGRESS"
+    ENRICHMENT_COMPLETE = "ENRICHMENT_COMPLETE"
+    BRIEF_CONFIRMED = "BRIEF_CONFIRMED"
+    RESEARCH_IN_PROGRESS = "RESEARCH_IN_PROGRESS"
+    RESEARCH_COMPLETE = "RESEARCH_COMPLETE"
+    RESEARCH_LOW_CONTEXT = "RESEARCH_LOW_CONTEXT"
+    DRAFT_IN_PROGRESS = "DRAFT_IN_PROGRESS"
+    DRAFT_UNDER_EVALUATION = "DRAFT_UNDER_EVALUATION"
+    DRAFT_REVISION_IN_PROGRESS = "DRAFT_REVISION_IN_PROGRESS"
+    DRAFT_EVALUATION_PASSED = "DRAFT_EVALUATION_PASSED"
+    DRAFT_ESCALATED = "DRAFT_ESCALATED"
+    FORMAT_IN_PROGRESS = "FORMAT_IN_PROGRESS"
+    FORMAT_COMPLETE = "FORMAT_COMPLETE"
+    PENDING_STRATEGIST_REVIEW = "PENDING_STRATEGIST_REVIEW"
+    STRATEGIST_APPROVED = "STRATEGIST_APPROVED"
+    LEGAL_CHECK_IN_PROGRESS = "LEGAL_CHECK_IN_PROGRESS"
+    REVIEWER_SKIPPED = "REVIEWER_SKIPPED"
+    PENDING_REVIEWER_REVIEW = "PENDING_REVIEWER_REVIEW"
+    REVIEWER_APPROVED = "REVIEWER_APPROVED"
+    COMPLIANCE_RULES_CHECK_IN_PROGRESS = "COMPLIANCE_RULES_CHECK_IN_PROGRESS"
+    COMPLIANCE_RULES_FAILED = "COMPLIANCE_RULES_FAILED"
+    STRATEGIST_RESOLVING = "STRATEGIST_RESOLVING"
+    COMPLIANCE_JUDGMENT_CHECK_IN_PROGRESS = "COMPLIANCE_JUDGMENT_CHECK_IN_PROGRESS"
+    COMPLIANCE_PASSED = "COMPLIANCE_PASSED"
+    PENDING_PUBLISHER_REVIEW = "PENDING_PUBLISHER_REVIEW"
+    PUBLISHER_CONFIRMED = "PUBLISHER_CONFIRMED"
+    PUBLISH_JOB_LOCKED = "PUBLISH_JOB_LOCKED"
+    SCHEDULED = "SCHEDULED"
+    PUBLISHING_IN_PROGRESS = "PUBLISHING_IN_PROGRESS"
+    PUBLISHED = "PUBLISHED"
+    PUBLISH_FAILED = "PUBLISH_FAILED"
+    STALLED = "STALLED"
+    CANCELLED = "CANCELLED"
+
+
+# Maps each state to the set of states it can transition to
+VALID_TRANSITIONS: dict[PipelineState, set[PipelineState]] = {
+    PipelineState.BRIEF_DRAFT: {PipelineState.BRIEF_SUBMITTED},
+    PipelineState.BRIEF_SUBMITTED: {PipelineState.ENRICHMENT_IN_PROGRESS, PipelineState.BRIEF_CONFIRMED},
+    PipelineState.ENRICHMENT_IN_PROGRESS: {PipelineState.ENRICHMENT_COMPLETE},
+    PipelineState.ENRICHMENT_COMPLETE: {PipelineState.BRIEF_CONFIRMED},
+    PipelineState.BRIEF_CONFIRMED: {PipelineState.RESEARCH_IN_PROGRESS},
+    PipelineState.RESEARCH_IN_PROGRESS: {
+        PipelineState.RESEARCH_COMPLETE,
+        PipelineState.RESEARCH_LOW_CONTEXT,
+    },
+    PipelineState.RESEARCH_LOW_CONTEXT: {
+        PipelineState.RESEARCH_IN_PROGRESS,  # retry after human adds context
+        PipelineState.RESEARCH_COMPLETE,     # human accepts low context
+        PipelineState.CANCELLED,
+    },
+    PipelineState.RESEARCH_COMPLETE: {PipelineState.DRAFT_IN_PROGRESS},
+    PipelineState.DRAFT_IN_PROGRESS: {PipelineState.DRAFT_UNDER_EVALUATION},
+    PipelineState.DRAFT_UNDER_EVALUATION: {
+        PipelineState.DRAFT_EVALUATION_PASSED,
+        PipelineState.DRAFT_REVISION_IN_PROGRESS,
+        PipelineState.DRAFT_ESCALATED,
+    },
+    PipelineState.DRAFT_REVISION_IN_PROGRESS: {PipelineState.DRAFT_UNDER_EVALUATION},
+    PipelineState.DRAFT_EVALUATION_PASSED: {PipelineState.FORMAT_IN_PROGRESS},
+    PipelineState.DRAFT_ESCALATED: {
+        PipelineState.DRAFT_IN_PROGRESS,  # strategist injects guidance
+        PipelineState.CANCELLED,
+    },
+    PipelineState.FORMAT_IN_PROGRESS: {PipelineState.FORMAT_COMPLETE},
+    PipelineState.FORMAT_COMPLETE: {PipelineState.PENDING_STRATEGIST_REVIEW},
+    PipelineState.PENDING_STRATEGIST_REVIEW: {
+        PipelineState.STRATEGIST_APPROVED,
+        PipelineState.DRAFT_IN_PROGRESS,  # rejected → revise
+        PipelineState.STALLED,
+    },
+    PipelineState.STRATEGIST_APPROVED: {PipelineState.LEGAL_CHECK_IN_PROGRESS},
+    PipelineState.LEGAL_CHECK_IN_PROGRESS: {
+        PipelineState.REVIEWER_SKIPPED,
+        PipelineState.PENDING_REVIEWER_REVIEW,
+    },
+    PipelineState.REVIEWER_SKIPPED: {PipelineState.COMPLIANCE_RULES_CHECK_IN_PROGRESS},
+    PipelineState.PENDING_REVIEWER_REVIEW: {
+        PipelineState.REVIEWER_APPROVED,
+        PipelineState.DRAFT_IN_PROGRESS,  # rejected → revise
+        PipelineState.STALLED,
+    },
+    PipelineState.REVIEWER_APPROVED: {PipelineState.COMPLIANCE_RULES_CHECK_IN_PROGRESS},
+    PipelineState.COMPLIANCE_RULES_CHECK_IN_PROGRESS: {
+        PipelineState.COMPLIANCE_JUDGMENT_CHECK_IN_PROGRESS,
+        PipelineState.COMPLIANCE_RULES_FAILED,
+    },
+    PipelineState.COMPLIANCE_RULES_FAILED: {PipelineState.STRATEGIST_RESOLVING},
+    PipelineState.STRATEGIST_RESOLVING: {
+        PipelineState.COMPLIANCE_RULES_CHECK_IN_PROGRESS,  # re-check after fixes
+    },
+    PipelineState.COMPLIANCE_JUDGMENT_CHECK_IN_PROGRESS: {
+        PipelineState.COMPLIANCE_PASSED,
+        PipelineState.COMPLIANCE_RULES_FAILED,  # judgment failure loops back
+    },
+    PipelineState.COMPLIANCE_PASSED: {PipelineState.PENDING_PUBLISHER_REVIEW},
+    PipelineState.PENDING_PUBLISHER_REVIEW: {
+        PipelineState.PUBLISHER_CONFIRMED,
+        PipelineState.STALLED,
+    },
+    PipelineState.PUBLISHER_CONFIRMED: {PipelineState.PUBLISH_JOB_LOCKED},
+    PipelineState.PUBLISH_JOB_LOCKED: {PipelineState.SCHEDULED},
+    PipelineState.SCHEDULED: {PipelineState.PUBLISHING_IN_PROGRESS},
+    PipelineState.PUBLISHING_IN_PROGRESS: {
+        PipelineState.PUBLISHED,
+        PipelineState.PUBLISH_FAILED,
+    },
+    PipelineState.PUBLISH_FAILED: {
+        PipelineState.PUBLISHING_IN_PROGRESS,  # retry
+        PipelineState.CANCELLED,
+    },
+    PipelineState.STALLED: {
+        PipelineState.PENDING_STRATEGIST_REVIEW,  # manually resumed
+        PipelineState.PENDING_REVIEWER_REVIEW,
+        PipelineState.PENDING_PUBLISHER_REVIEW,
+        PipelineState.CANCELLED,
+    },
+    PipelineState.PUBLISHED: set(),
+    PipelineState.CANCELLED: set(),
+}
+
+
+def can_transition(current: PipelineState, target: PipelineState) -> bool:
+    return target in VALID_TRANSITIONS.get(current, set())

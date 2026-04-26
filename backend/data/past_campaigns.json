@@ -1,0 +1,54 @@
+[
+  {
+    "id": "campaign-001",
+    "title": "How to automate code review with GitHub Actions",
+    "content_type": "tutorial",
+    "published_date": "2024-09-15",
+    "channel": "blog",
+    "target_audience": "developers new to CI/CD",
+    "goal": "Drive adoption of GitHub Actions for automated testing",
+    "keywords": ["GitHub Actions", "CI/CD", "automated testing", "code review", "workflow"],
+    "angle": "Problem-first: frame around the pain of manual code review before introducing Actions",
+    "word_count": 1850,
+    "performance_notes": "Top organic search performer for 'github actions code review' query"
+  },
+  {
+    "id": "campaign-002",
+    "title": "GitHub Copilot is now available for all developers",
+    "content_type": "announcement",
+    "published_date": "2024-11-01",
+    "channel": "linkedin",
+    "target_audience": "developers and engineering leads",
+    "goal": "Drive Copilot trial signups",
+    "keywords": ["GitHub Copilot", "AI coding", "developer productivity", "code completion"],
+    "angle": "Lead with the access expansion, not the features — developers care about availability",
+    "character_count": 1240,
+    "performance_notes": "Highest LinkedIn engagement of the quarter, drove 12k trial signups"
+  },
+  {
+    "id": "campaign-003",
+    "title": "The future of code review is async",
+    "content_type": "thought_leadership",
+    "published_date": "2024-10-20",
+    "channel": "twitter",
+    "target_audience": "senior engineers and engineering managers",
+    "goal": "Position GitHub as the leader in developer workflow thinking",
+    "keywords": ["code review", "async development", "developer experience", "pull requests"],
+    "angle": "Provocative thesis first: synchronous code review is a bottleneck by design",
+    "tweet_count": 6,
+    "performance_notes": "2.3k retweets, sparked significant developer discussion"
+  },
+  {
+    "id": "campaign-004",
+    "title": "How Shopify ships 40+ deploys per day with GitHub",
+    "content_type": "case_study",
+    "published_date": "2024-08-10",
+    "channel": "blog",
+    "target_audience": "engineering leaders at high-growth e-commerce companies",
+    "goal": "Generate enterprise sales leads for GitHub Enterprise",
+    "keywords": ["GitHub Enterprise", "continuous deployment", "developer productivity", "Shopify", "scaling"],
+    "angle": "Lead with Shopify's scale challenge, not GitHub's product — let outcomes prove the value",
+    "word_count": 2200,
+    "performance_notes": "Generated 340 enterprise inbound leads over 30 days post-publish"
+  }
+]
